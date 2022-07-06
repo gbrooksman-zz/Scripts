@@ -1,0 +1,36 @@
+SET TERMOUT OFF
+SET PAGESIZE 0
+SET TRIMSPOOL ON
+SET LINESIZE 100
+SET FEEDBACK OFF
+
+
+SET HEAD OFF;
+SPOOL c:\oratemp\DisableTrigs.sql
+
+prompt SPOOL c:\oratemp\DisableTrigs.log;
+select 'ALTER TRIGGER ' || trigger_name || ' DISABLE;'
+FROM USER_TRIGGERS
+ORDER BY TRIGGER_NAME;
+
+prompt SPOOL OFF;
+
+SPOOL OFF;
+
+
+
+SPOOL c:\oratemp\EnableTrigs.sql
+
+prompt SPOOL c:\oratemp\EnableTrigs.log;
+select 'ALTER TRIGGER ' || trigger_name || ' ENABLE;'
+FROM USER_TRIGGERS
+ORDER BY TRIGGER_NAME;
+
+prompt SPOOL OFF;
+
+SPOOL OFF;
+
+SET LINESIZE 80
+SET PAGESIZE 24
+SET TERMOUT ON
+SET FEEDBACK ON
